@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convocation</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    text-align: center;
+    font-family: Arial;
+    background: #f4f6f8;
+}
+
+.container {
+    position: relative;
+    width: 90%;
+    max-width: 520px;
+    margin: 20px auto;
+}
+
+.poster {
+    width: 100%;
+}
+
+/* 🔥 FIXED NAME */
+.name {
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    text-align: center;
+
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    color: #0a2a66;
+
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* UI */
+input {
+    margin-top: 20px;
+    padding: 10px;
+    width: 80%;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #0a2a66;
+    color: white;
+    border: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="posterArea">
+    <img src="poster.png" class="poster">
+    <div class="name" id="nameText">Your Name</div>
+</div>
+
+<input type="text" id="nameInput" placeholder="Enter your name">
+
+<br>
+
+<button onclick="downloadImage()">Download</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script>
+const input = document.getElementById("nameInput");
+const nameText = document.getElementById("nameText");
+
+/* 🔥 SAFE AUTOFIT */
+function autoFit() {
+    let size = 40;
+    nameText.style.fontSize = size + "px";
+
+    for (let i = 0; i < 50; i++) {
+        if (nameText.scrollWidth <= nameText.clientWidth) break;
+        size--;
+        nameText.style.fontSize = size + "px";
+    }
+}
+
+input.addEventListener("input", function() {
+    nameText.textContent = this.value || "Your Name";
+    autoFit();
+});
+
+/* DOWNLOAD */
+function downloadImage() {
+    html2canvas(document.getElementById("posterArea"), {
+        scale: 3
+    }).then(canvas => {
+        let link = document.createElement("a");
+        link.download = "convocation.png";
+        link.href = canvas.toDataURL();
+        link.click();
+    });
+}
+
+autoFit();
+</script>
+
+</body>
+</html>
