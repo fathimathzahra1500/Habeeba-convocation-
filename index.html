@@ -1,0 +1,27 @@
+<script>
+const input = document.getElementById("nameInput");
+const nameText = document.getElementById("nameText");
+
+function autoFit() {
+    let maxSize = 42;
+    let minSize = 12;
+
+    nameText.style.fontSize = maxSize + "px";
+
+    while (
+        (nameText.scrollWidth > nameText.clientWidth ||
+         nameText.scrollHeight > nameText.clientHeight) &&
+        maxSize > minSize
+    ) {
+        maxSize--;
+        nameText.style.fontSize = maxSize + "px";
+    }
+}
+
+input.addEventListener("input", () => {
+    nameText.textContent = input.value || "Your Name";
+    autoFit();
+});
+
+window.onload = autoFit;
+</script>
