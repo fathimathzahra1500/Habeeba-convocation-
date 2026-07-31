@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convocation Name Generator</title>
+
+<!-- Google Font (Professional) -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    text-align: center;
+}
+
+/* Poster container */
+.container {
+    position: relative;
+    width: 90%;
+    max-width: 520px;
+    margin: 20px auto;
+}
+
+/* Poster */
+.poster {
+    width: 100%;
+    display: block;
+}
+
+/* Name overlay */
+.name {
+    position: absolute;
+    top: 75%;  /* 🔥 tuned position */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    width: 80%;
+    text-align: center;
+
+    font-family: 'Playfair Display', serif; /* 🔥 premium font */
+    font-weight: 600;
+    color: #0a2a66; /* 🔥 dark blue (poster match) */
+
+    letter-spacing: 0.5px;
+
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* Controls */
+.controls {
+    margin-top: 20px;
+}
+
+input {
+    padding: 12px;
+    width: 80%;
+    max-width: 400px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+button {
+    margin-top: 12px;
+    padding: 12px 25px;
+    font-size: 16px;
+    background: #0a2a66;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #081f4d;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="posterArea">
+    <img src="poster.png" class="poster">
+    <div class="name" id="nameText">Your Name</div>
+</div>
+
+<div class="controls">
+    <input type="text" id="nameInput" placeholder="Enter your name">
+    <br>
+    <button onclick="downloadImage()">Download Image</button>
+</div>
+
+<!-- html2canvas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script>
+const input = document.getElementById("nameInput");
+const nameText = document.getElementById("nameText");
+
+/* Auto-fit font */
+function autoFit() {
+    let size = 34;
+    nameText.style.fontSize = size + "px";
+
+    while (nameText.scrollWidth > nameText.clientWidth && size > 14) {
+        size--;
+        nameText.style.fontSize = size + "px";
+    }
+}
+
+/* Live update */
+input.addEventListener("input", () => {
+    nameText.textContent = input.value || "Your Name";
+    autoFit();
+});
+
+/* Download high quality */
+function downloadImage() {
+    html2canvas(document.getElementById("posterArea"), {
+        scale: 3
+    }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "convocation.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+    });
+}
+
+/* Initial */
+autoFit();
+</script>
+
+</body>
+</html>
