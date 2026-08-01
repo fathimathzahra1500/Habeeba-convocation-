@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Name Editing Card</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.card {
+    position: relative;
+    width: 320px;
+}
+
+/* ✅ Poster image */
+.card img {
+    width: 100%;
+    display: block;
+}
+
+/* ✅ Name position */
+.name-box {
+    position: absolute;
+    top: 80%;  /* 🔥 ningal paranja value */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 65%;
+    text-align: center;
+}
+
+/* ✅ Input style */
+.name-box input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    text-align: center;
+
+    font-size: clamp(14px, 3vw, 18px);
+    font-weight: 600;
+
+    color: #0a2a66;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Button */
+.download-btn {
+    margin-top: 15px;
+    text-align: center;
+}
+
+button {
+    padding: 8px 15px;
+    border: none;
+    background: #0a2a66;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div>
+    <div class="card" id="capture">
+
+        <!-- ✅ IMPORTANT -->
+        <!-- poster.png same folder il vechaaal mathi -->
+        <img src="poster.png" alt="Poster">
+
+        <div class="name-box">
+            <input type="text" placeholder="Enter Name">
+        </div>
+
+    </div>
+
+    <div class="download-btn">
+        <button onclick="downloadImage()">Download</button>
+    </div>
+</div>
+
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+<script>
+function downloadImage() {
+    html2canvas(document.getElementById("capture")).then(canvas => {
+        let link = document.createElement("a");
+        link.download = "poster.png";
+        link.href = canvas.toDataURL();
+        link.click();
+    });
+}
+</script>
+
+</body>
+</html>
